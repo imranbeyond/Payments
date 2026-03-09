@@ -1,0 +1,87 @@
+/* Gateway table */
+.gateway-table td {
+    vertical-align: middle;
+}
+
+.gateway-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.gateway-icon {
+    font-size: 28px;
+    width: 40px;
+    text-align: center;
+}
+
+/* Gateway brand colors */
+.gateway-icon-stripe { color: #635BFF; }
+.gateway-icon-paypal { color: #003087; }
+.gateway-icon-razorpay { color: #0C2451; }
+.gateway-icon-payu { color: #00C853; }
+.gateway-icon-telr { color: #E8412F; }
+.gateway-icon-myfatoorah { color: #00A650; }
+.gateway-icon-tap { color: #2ACE80; }
+
+/* Status badges */
+.badge-status {
+    font-size: 12px;
+    padding: 5px 12px;
+    border-radius: 12px;
+    font-weight: 500;
+}
+
+.badge-enabled {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.badge-disabled {
+    background-color: #e2e3e5;
+    color: #6c757d;
+}
+
+/* Mode badges */
+.badge-mode {
+    font-size: 12px;
+    padding: 5px 12px;
+    border-radius: 12px;
+    font-weight: 500;
+}
+
+.badge-sandbox {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.badge-live {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+/* Test connection result */
+.test-result {
+    display: none;
+    margin-top: 10px;
+    padding: 10px 15px;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.test-result.success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.test-result.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+/* Toggle button transition */
+.toggle-gateway-btn {
+    min-width: 100px;
+}

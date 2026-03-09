@@ -1,0 +1,227 @@
+{
+    "name": "Payment Gateways",
+    "description": "Payment gateway configuration for TadreebLMS. Configure and manage multiple payment gateways including Stripe, PayPal, Razorpay, PayU, Telr, MyFatoorah, and Tap Payments.",
+    "version": "1.0.0",
+    "author": "TadreebLMS",
+    "integration_key": "PAYMENT_GATEWAYS_INTEGRATION",
+    "metadata": {
+        "fields": {
+            "GATEWAY_ENABLED_LIST": {
+                "label": "Enabled Gateways",
+                "type": "text",
+                "placeholder": "Comma-separated list of enabled gateways (e.g. stripe,paypal)",
+                "required": false
+            },
+            "STRIPE_ENABLED": {
+                "label": "Stripe Enabled",
+                "type": "text",
+                "placeholder": "true or false",
+                "required": false
+            },
+            "STRIPE_MODE": {
+                "label": "Stripe Mode",
+                "type": "text",
+                "placeholder": "sandbox or live",
+                "required": false
+            },
+            "STRIPE_API_KEY": {
+                "label": "Stripe Publishable Key",
+                "type": "text",
+                "placeholder": "pk_test_...",
+                "required": false
+            },
+            "STRIPE_SECRET_KEY": {
+                "label": "Stripe Secret Key",
+                "type": "password",
+                "placeholder": "sk_test_...",
+                "required": false
+            },
+            "STRIPE_WEBHOOK_SECRET": {
+                "label": "Stripe Webhook Secret",
+                "type": "password",
+                "placeholder": "whsec_...",
+                "required": false
+            },
+            "PAYPAL_ENABLED": {
+                "label": "PayPal Enabled",
+                "type": "text",
+                "placeholder": "true or false",
+                "required": false
+            },
+            "PAYPAL_MODE": {
+                "label": "PayPal Mode",
+                "type": "text",
+                "placeholder": "sandbox or live",
+                "required": false
+            },
+            "PAYPAL_API_KEY": {
+                "label": "PayPal Client ID",
+                "type": "text",
+                "placeholder": "Your PayPal Client ID",
+                "required": false
+            },
+            "PAYPAL_SECRET_KEY": {
+                "label": "PayPal Secret",
+                "type": "password",
+                "placeholder": "Your PayPal Secret",
+                "required": false
+            },
+            "PAYPAL_WEBHOOK_SECRET": {
+                "label": "PayPal Webhook ID",
+                "type": "password",
+                "placeholder": "Your PayPal Webhook ID",
+                "required": false
+            },
+            "RAZORPAY_ENABLED": {
+                "label": "Razorpay Enabled",
+                "type": "text",
+                "placeholder": "true or false",
+                "required": false
+            },
+            "RAZORPAY_MODE": {
+                "label": "Razorpay Mode",
+                "type": "text",
+                "placeholder": "sandbox or live",
+                "required": false
+            },
+            "RAZORPAY_API_KEY": {
+                "label": "Razorpay Key ID",
+                "type": "text",
+                "placeholder": "rzp_test_...",
+                "required": false
+            },
+            "RAZORPAY_SECRET_KEY": {
+                "label": "Razorpay Key Secret",
+                "type": "password",
+                "placeholder": "Your Razorpay Key Secret",
+                "required": false
+            },
+            "RAZORPAY_WEBHOOK_SECRET": {
+                "label": "Razorpay Webhook Secret",
+                "type": "password",
+                "placeholder": "Your Razorpay Webhook Secret",
+                "required": false
+            },
+            "PAYU_ENABLED": {
+                "label": "PayU Enabled",
+                "type": "text",
+                "placeholder": "true or false",
+                "required": false
+            },
+            "PAYU_MODE": {
+                "label": "PayU Mode",
+                "type": "text",
+                "placeholder": "sandbox or live",
+                "required": false
+            },
+            "PAYU_API_KEY": {
+                "label": "PayU Merchant Key",
+                "type": "text",
+                "placeholder": "Your PayU Merchant Key",
+                "required": false
+            },
+            "PAYU_SECRET_KEY": {
+                "label": "PayU Merchant Salt",
+                "type": "password",
+                "placeholder": "Your PayU Merchant Salt",
+                "required": false
+            },
+            "PAYU_WEBHOOK_SECRET": {
+                "label": "PayU Webhook Secret",
+                "type": "password",
+                "placeholder": "Your PayU Webhook Secret",
+                "required": false
+            },
+            "TELR_ENABLED": {
+                "label": "Telr Enabled",
+                "type": "text",
+                "placeholder": "true or false",
+                "required": false
+            },
+            "TELR_MODE": {
+                "label": "Telr Mode",
+                "type": "text",
+                "placeholder": "sandbox or live",
+                "required": false
+            },
+            "TELR_API_KEY": {
+                "label": "Telr Store ID",
+                "type": "text",
+                "placeholder": "Your Telr Store ID",
+                "required": false
+            },
+            "TELR_SECRET_KEY": {
+                "label": "Telr Authentication Key",
+                "type": "password",
+                "placeholder": "Your Telr Authentication Key",
+                "required": false
+            },
+            "TELR_WEBHOOK_SECRET": {
+                "label": "Telr Webhook Secret",
+                "type": "password",
+                "placeholder": "Your Telr Webhook Secret",
+                "required": false
+            },
+            "MYFATOORAH_ENABLED": {
+                "label": "MyFatoorah Enabled",
+                "type": "text",
+                "placeholder": "true or false",
+                "required": false
+            },
+            "MYFATOORAH_MODE": {
+                "label": "MyFatoorah Mode",
+                "type": "text",
+                "placeholder": "sandbox or live",
+                "required": false
+            },
+            "MYFATOORAH_API_KEY": {
+                "label": "MyFatoorah API Key",
+                "type": "text",
+                "placeholder": "Your MyFatoorah API Key",
+                "required": false
+            },
+            "MYFATOORAH_SECRET_KEY": {
+                "label": "MyFatoorah Secret Key",
+                "type": "password",
+                "placeholder": "Your MyFatoorah Secret Key",
+                "required": false
+            },
+            "MYFATOORAH_WEBHOOK_SECRET": {
+                "label": "MyFatoorah Webhook Secret",
+                "type": "password",
+                "placeholder": "Your MyFatoorah Webhook Secret",
+                "required": false
+            },
+            "TAP_ENABLED": {
+                "label": "Tap Payments Enabled",
+                "type": "text",
+                "placeholder": "true or false",
+                "required": false
+            },
+            "TAP_MODE": {
+                "label": "Tap Payments Mode",
+                "type": "text",
+                "placeholder": "sandbox or live",
+                "required": false
+            },
+            "TAP_API_KEY": {
+                "label": "Tap Publishable Key",
+                "type": "text",
+                "placeholder": "pk_test_...",
+                "required": false
+            },
+            "TAP_SECRET_KEY": {
+                "label": "Tap Secret Key",
+                "type": "password",
+                "placeholder": "sk_test_...",
+                "required": false
+            },
+            "TAP_WEBHOOK_SECRET": {
+                "label": "Tap Webhook Secret",
+                "type": "password",
+                "placeholder": "Your Tap Webhook Secret",
+                "required": false
+            }
+        }
+    }
+}
