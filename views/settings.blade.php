@@ -3,7 +3,74 @@
 @section('title', 'Payment Gateway Configuration | ' . config('app.name'))
 
 @push('after-styles')
-<link rel="stylesheet" href="{{ url('modules/payment-gateways/public/css/payment-gateways.css') }}">
+<style>
+/* Gateway table */
+.gateway-table td {
+    vertical-align: middle;
+}
+
+.gateway-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.gateway-icon {
+    font-size: 28px;
+    width: 40px;
+    text-align: center;
+}
+
+/* Gateway brand colors */
+.gateway-icon-stripe { color: #635BFF; }
+.gateway-icon-paypal { color: #003087; }
+.gateway-icon-razorpay { color: #0C2451; }
+.gateway-icon-payu { color: #00C853; }
+.gateway-icon-telr { color: #E8412F; }
+.gateway-icon-myfatoorah { color: #00A650; }
+.gateway-icon-tap { color: #2ACE80; }
+
+/* Status badges */
+.badge-status {
+    font-size: 12px;
+    padding: 5px 12px;
+    border-radius: 12px;
+    font-weight: 500;
+}
+
+.badge-enabled {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.badge-disabled {
+    background-color: #e2e3e5;
+    color: #6c757d;
+}
+
+/* Mode badges */
+.badge-mode {
+    font-size: 12px;
+    padding: 5px 12px;
+    border-radius: 12px;
+    font-weight: 500;
+}
+
+.badge-sandbox {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.badge-live {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+/* Toggle button transition */
+.toggle-gateway-btn {
+    min-width: 100px;
+}
+</style>
 @endpush
 
 @section('content')
@@ -107,5 +174,82 @@
 @endsection
 
 @push('after-scripts')
-<script src="{{ url('modules/payment-gateways/public/js/payment-gateways.js') }}"></script>
+<script>
+$(document).ready(function() {
+
+    function getCsrfToken() {
+        return $('meta[name="csrf-token"]').attr('content') || $('input[name="_token"]').val();
+    }
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': getCsrfToken(),
+            'X-Requested-With': 'XMLHttpRequest',
+            'Accept': 'application/json'
+        }
+    });
+
+    $(document).on('click', '.toggle-gateway-btn', function() {
+        var btn = $(this);
+        var slug = btn.data('slug');
+        var originalHtml = btn.html();
+
+        btn.prop('disabled', true).html('<i class="fas fa-spinner fa-spin mr-1"></i> Working...');
+
+        $.ajax({
+            url: '/external-apps/payment-gateways/toggle/' + slug,
+            method: 'POST',
+            dataType: 'json',
+            success: function(response) {
+                if (response.success) {
+                    var enabled = response.enabled;
+
+                    var statusBadge = $('#status-badge-' + slug);
+                    statusBadge
+                        .text(enabled ? 'Enabled' : 'Disabled')
+                        .removeClass('badge-enabled badge-disabled')
+                        .addClass(enabled ? 'badge-enabled' : 'badge-disabled');
+
+                    btn.removeClass('btn-outline-success btn-outline-danger')
+                       .addClass(enabled ? 'btn-outline-danger' : 'btn-outline-success')
+                       .html('<i class="fas ' + (enabled ? 'fa-toggle-off' : 'fa-toggle-on') + ' mr-1"></i> ' + (enabled ? 'Disable' : 'Enable'))
+                       .data('enabled', enabled ? '1' : '0');
+
+                    showNotification(response.message, 'success');
+                } else {
+                    showNotification(response.message || 'An error occurred.', 'error');
+                    btn.html(originalHtml);
+                }
+            },
+            error: function(xhr) {
+                var message = 'An error occurred.';
+                if (xhr.responseJSON && xhr.responseJSON.message) {
+                    message = xhr.responseJSON.message;
+                }
+                showNotification(message, 'error');
+                btn.html(originalHtml);
+            },
+            complete: function() {
+                btn.prop('disabled', false);
+            }
+        });
+    });
+
+    function showNotification(message, type) {
+        var alertClass = type === 'success' ? 'alert-success' : 'alert-danger';
+        var alert = $(
+            '<div class="alert ' + alertClass + ' alert-dismissible fade show" role="alert">' +
+                message +
+                '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
+                    '<span aria-hidden="true">&times;</span>' +
+                '</button>' +
+            '</div>'
+        );
+        $('.card-body hr').first().after(alert);
+        setTimeout(function() {
+            alert.alert('close');
+        }, 5000);
+    }
+});
+</script>
 @endpush

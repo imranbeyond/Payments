@@ -3,7 +3,37 @@
 @section('title', $gateway['name'] . ' Configuration | ' . config('app.name'))
 
 @push('after-styles')
-<link rel="stylesheet" href="{{ url('modules/payment-gateways/public/css/payment-gateways.css') }}">
+<style>
+/* Gateway brand colors */
+.gateway-icon-stripe { color: #635BFF; }
+.gateway-icon-paypal { color: #003087; }
+.gateway-icon-razorpay { color: #0C2451; }
+.gateway-icon-payu { color: #00C853; }
+.gateway-icon-telr { color: #E8412F; }
+.gateway-icon-myfatoorah { color: #00A650; }
+.gateway-icon-tap { color: #2ACE80; }
+
+/* Test connection result */
+.test-result {
+    display: none;
+    margin-top: 10px;
+    padding: 10px 15px;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.test-result.success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.test-result.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+</style>
 @endpush
 
 @section('content')
@@ -124,5 +154,57 @@
 @endsection
 
 @push('after-scripts')
-<script src="{{ url('modules/payment-gateways/public/js/payment-gateways.js') }}"></script>
+<script>
+$(document).ready(function() {
+
+    function getCsrfToken() {
+        return $('meta[name="csrf-token"]').attr('content') || $('input[name="_token"]').val();
+    }
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': getCsrfToken(),
+            'X-Requested-With': 'XMLHttpRequest',
+            'Accept': 'application/json'
+        }
+    });
+
+    $('#testConnectionBtn').on('click', function() {
+        var btn = $(this);
+        var slug = btn.data('slug');
+        var resultDiv = $('#testResult');
+        var originalText = btn.html();
+
+        btn.prop('disabled', true).html('<i class="fas fa-spinner fa-spin mr-1"></i> Testing...');
+        resultDiv.hide().removeClass('success error');
+
+        $.ajax({
+            url: '/external-apps/payment-gateways/test/' + slug,
+            method: 'POST',
+            dataType: 'json',
+            data: {
+                mode: $('#mode').val(),
+                api_key: $('#api_key').val(),
+                secret_key: $('#secret_key').val()
+            },
+            success: function(response) {
+                resultDiv
+                    .addClass(response.success ? 'success' : 'error')
+                    .text(response.message)
+                    .show();
+            },
+            error: function(xhr) {
+                var message = 'An error occurred while testing the connection.';
+                if (xhr.responseJSON && xhr.responseJSON.message) {
+                    message = xhr.responseJSON.message;
+                }
+                resultDiv.addClass('error').text(message).show();
+            },
+            complete: function() {
+                btn.prop('disabled', false).html(originalText);
+            }
+        });
+    });
+});
+</script>
 @endpush
